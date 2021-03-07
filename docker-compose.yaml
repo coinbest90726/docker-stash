@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  logstash:
+    build:
+      context: ${PWD}
+      dockerfile: Dockerfile
+      args:
+        - UID=${UID}
+        - GID=${UID}
+        - ENV=$APP_ENV
+    container_name: logstash
+    command:  /bin/bash -c "/usr/share/logstash/bin/logstash --path.settings=/etc/logstash/"
+    env_file:
+      - .env
+    restart: always
+    working_dir: '/usr/share/logstash'
+    volumes:
+      - './pipelines/:/etc/logstash/conf.d/'
+      - './config/etc/logstash/conectors:/var/lib/logstash/'
+      - './config/etc/logstash/:/etc/logstash/'
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - logstash
+
+networks:
+  logstash:
+    external: true
+

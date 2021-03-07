@@ -1,0 +1,4 @@
+xpack.monitoring.enabled: true
+xpack.monitoring.elasticsearch.hosts: ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+path.data: /var/lib/logstash
+path.logs: /var/log/logstash
